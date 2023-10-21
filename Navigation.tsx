@@ -1,5 +1,5 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
 
 //Screens
 import SignIn from "./src/screens/SignIn";
