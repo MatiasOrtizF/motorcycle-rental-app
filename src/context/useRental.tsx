@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 import { motorcycle } from "../service/MotorcycleService";
+import { AxiosRequestConfig } from "axios";
 
 export const RentalContext = createContext({});
 
@@ -9,12 +10,13 @@ interface Props {
 
 export function RentalProvider({children}: Props) {
     const [motorcycles, setMotorcycles] = useState([]);
-    const [config, setConfig] = useState({
+    const [config, setConfig] = useState<AxiosRequestConfig>({
         headers: {
-            'Authorization': "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIxIiwiaWF0IjoxNjk3ODMwNDg0LCJzdWIiOiJqdWFuLnBlcmV6QGVtYWlsLmNvbSIsImlzcyI6Ik1haW4iLCJleHAiOjE2OTg0MzUyODR9.BDdxCLFb7ZObpl9qx54_4JDfNr8zHWfPRoZMfHjmSnM",
+            'Authorization': "",
             'Content-Type': 'application/json'
         }
     })
+    const [isSinged, setIsSinged] = useState(true);
 
     const getAllMotorcycles = () => {
         motorcycle.getAll(config).then(response=> {
@@ -28,7 +30,9 @@ export function RentalProvider({children}: Props) {
         <RentalContext.Provider value={{
             motorcycles,
             setConfig,
-            getAllMotorcycles
+            getAllMotorcycles,
+            setIsSinged,
+            isSinged,
         }}>
             {children}
         </RentalContext.Provider>

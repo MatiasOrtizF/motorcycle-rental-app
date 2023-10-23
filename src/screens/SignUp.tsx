@@ -13,18 +13,23 @@ export default function SignUp() {
                     style={styles.inputText}
                     placeholder='email'
                     placeholderTextColor={'white'}
+                    autoCapitalize='none'
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
                     style={styles.inputText}
                     placeholder='password'
                     placeholderTextColor={'white'}
+                    secureTextEntry={true}
+                    autoCapitalize='none'
                 />
                 <Text style={styles.label}>Confirm Passowrd</Text>
                 <TextInput
                     style={styles.inputText}
                     placeholder='confirm password'
                     placeholderTextColor={'white'}
+                    secureTextEntry={true}
+                    autoCapitalize='none'
                 />
                 <TouchableOpacity style={{backgroundColor: "orange", alignSelf:"flex-end", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 15, marginTop: 10}}>
                     <Text style={{color: myColors.light}}>Submit</Text>
