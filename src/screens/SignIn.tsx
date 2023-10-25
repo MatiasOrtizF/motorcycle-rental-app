@@ -17,13 +17,12 @@ export default function SignIn() {
     const validationLogin = () => {
         const userData = {email, password}
         login.validationCredentials(userData).then(response=> {
-            setConfig((prevConfig: AxiosRequestConfig)=>({
-                ...prevConfig, 
+            console.log("hola")
+            setConfig({
                 headers: {
-                    ...prevConfig.headers, 
-                    'Authorization': response.data
+                    'Authorization': response.data,
                 }
-            }));
+            })
             setIsSinged(true);
         }).catch(error=> {
             if (error.response && error.response.status === 400) {

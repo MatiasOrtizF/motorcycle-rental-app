@@ -26,7 +26,10 @@ export default function Home() {
                             <Text style={{marginVertical: 5, fontWeight: 'bold'}}>{motorcycle.motorcycleName}</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: "center"}}>
                                 <Text>${motorcycle.price}/per day</Text>
-                                <Text>4.8</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                    <Image style={{width: 20, height: 20}} source={require('../../assets/icons/star-complet-icon.png')}/>
+                                    <Text>4.8</Text>
+                                </View>
                                 {/* <TouchableOpacity style={{backgroundColor: myColors.orange, paddingHorizontal: 15 , paddingVertical: 5}}>
                                     <Text style={{color: myColors.light}}>Rental</Text>
                                 </TouchableOpacity> */}
@@ -34,8 +37,9 @@ export default function Home() {
                         </View>
                     </View>
                     )}
+                    showsVerticalScrollIndicator={false}
                     numColumns={2}
-                    keyExtractor={item=> item.id}
+                    keyExtractor={item=> item.id.toString()}
                 />
             </View>
         </SafeAreaView>

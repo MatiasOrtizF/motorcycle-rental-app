@@ -15,23 +15,23 @@ import MotorcycleDetails from "./src/screens/Motorcycle-Details";
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
-    const {isSinged} = useRental();
+    const { isSinged } = useRental();
 
     return(
-        isSinged >0 ?
+        isSinged ?
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{headerShown: false}}>
-                    <Tab.Screen name="Home" component={MotorcycleDetails}/>
+                    <Tab.Screen name="Home" component={Home}/>
                     <Tab.Screen name="Save" component={Save}/>
                     <Tab.Screen name="Profile" component={Profile}/>
                 </Tab.Navigator>
             </NavigationContainer>
         :
-        <NavigationContainer>
-                <Tab.Navigator screenOptions={{headerShown: false}}>
-                    <Tab.Screen name="SignIn" component={SignIn} options={{tabBarLabel: "Sign In"}}/>
-                    <Tab.Screen name="SignUp" component={SignUp} options={{tabBarLabel: "Sign Up"}}/>
-                </Tab.Navigator>
-        </NavigationContainer>
+            <NavigationContainer>
+                    <Tab.Navigator screenOptions={{headerShown: false}}>
+                        <Tab.Screen name="SignIn" component={SignIn} options={{tabBarLabel: "Sign In"}}/>
+                        <Tab.Screen name="SignUp" component={SignUp} options={{tabBarLabel: "Sign Up"}}/>
+                    </Tab.Navigator>
+            </NavigationContainer>
     )
 }
