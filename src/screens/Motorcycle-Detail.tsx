@@ -2,7 +2,7 @@ import { Text, View, SafeAreaView, Platform, TouchableOpacity, ImageBackground, 
 import Constants from 'expo-constants';
 import { myColors } from "../styles/Colors";
 
-export default function MyMotorcycles() {
+export default function MotorcycleDetail() {
 
     const marginTop = Platform.OS === 'android' ? Constants.statusBarHeight : 0;
 

@@ -17,7 +17,6 @@ export default function SignIn() {
     const validationLogin = () => {
         const userData = {email, password}
         login.validationCredentials(userData).then(response=> {
-            console.log("hola")
             setConfig({
                 headers: {
                     'Authorization': response.data,

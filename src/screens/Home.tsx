@@ -15,15 +15,28 @@ export default function Home() {
 
     return(
         <SafeAreaView>
-            <View style={{paddingHorizontal: 15}}>
+            <View style={{paddingHorizontal: 10}}>
+                <View style={{paddingHorizontal: 8}}>
+                    <View style={{flexDirection: "row", alignItems: "center", marginVertical: 15}}>
+                        <Image style={{width: 50, height: 50, borderRadius: 50, marginRight: 7}} source={{uri: `https://i.pravatar.cc/150?u=${"JuanPerez"}`}}/>
+                        <View>
+                            <Text>Welcome 👋</Text>
+                            <Text style={{fontWeight: "600", fontSize: 16}}>Juan Perez</Text>
+                        </View>
+                    </View>
+                    <TextInput
+                        style={{backgroundColor: "white", borderRadius: 50, height: 40, paddingHorizontal: 15, marginBottom: 10}}
+                        placeholder='Search your motorcycle'
+                    />
+                </View>
                  {/* fix marginTop */}
                 <FlatList
                     data={motorcycles}
                     renderItem={({item: motorcycle})=> (
-                    <View style={{ backgroundColor: "white", flex: 0.5, margin: 10, borderRadius: 10, overflow: "hidden"}}>
+                    <View style={{ backgroundColor: "white", flex: 0.5, marginVertical: 10, marginHorizontal: 8, borderRadius: 10, overflow: "hidden"}}>
                         <ImageBackground style={{width: "100%", height: 100}} source={{uri: motorcycle.image}}/>
                         <View style={{paddingHorizontal: 5, paddingBottom: 5}}>
-                            <Text style={{marginVertical: 5, fontWeight: 'bold'}}>{motorcycle.motorcycleName}</Text>
+                            <Text numberOfLines={1} ellipsizeMode='tail' style={{marginVertical: 5, fontWeight: 'bold'}}>{motorcycle.motorcycleName}</Text>
                             <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: "center"}}>
                                 <Text>${motorcycle.price}/per day</Text>
                                 <View style={{flexDirection: 'row'}}>
