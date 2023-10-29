@@ -3,9 +3,10 @@ import Constants from 'expo-constants';
 import { myColors } from "../styles/Colors";
 import { useNavigation } from "@react-navigation/native"
 import MyRentals from "./MyRentals";
+import { RootStackParamList } from "../types/RootStackParamList";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
-export default function Profile() {
-    const navigation = useNavigation();
+export default function Profile({navigation}: any) {
     const marginTop = Platform.OS === 'android' ? Constants.statusBarHeight : 0;
 
     return(
@@ -20,7 +21,7 @@ export default function Profile() {
                     </View>
                 </View>
                 <View>
-                    <TouchableOpacity style={{flexDirection: 'row', width: "100%", backgroundColor: "white", padding: 15, borderRadius: 50, marginVertical: 8}}>
+                    <TouchableOpacity onPress={()=> navigation.navigate("MyMotorcycles")} style={{flexDirection: 'row', width: "100%", backgroundColor: "white", padding: 15, borderRadius: 50, marginVertical: 8}}>
                         <Image style={{width: 20, height: 20}} source={require('../../assets/icons/my-motorcycles-icon.png')}/>
                         <Text style={{marginLeft: 5}}>My Motorcycles</Text>
                     </TouchableOpacity>

@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { motorcycle } from "../service/MotorcycleService";
 import { AxiosRequestConfig } from "axios";
+import Motorcycle from "../types/Index";
 
 export const RentalContext = createContext({
     motorcycles: [] as Motorcycle[],
@@ -12,14 +13,6 @@ export const RentalContext = createContext({
 
 interface Props {
     children: ReactNode;
-}
-
-interface Motorcycle {
-    id: number,
-    motorcycleName: string,
-    image: string,
-    gps: boolean,
-    price: number
 }
 
 export function RentalProvider({children}: Props) {
