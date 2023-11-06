@@ -8,6 +8,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    btn: {
+        backgroundColor: myColors.dark, 
+        alignItems: "center", 
+        padding: 10, 
+        borderRadius: 50
+    },
     //login
     label: {
         color: 'orange',
@@ -20,7 +26,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#FF9526',
         marginVertical: 5,
-    }
+    },
 })
 
 export default styles;

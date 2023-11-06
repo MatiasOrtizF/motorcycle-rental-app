@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator , StackNavigationProp } from "@react-navigation/stack";
 import { useRental } from "./src/hooks/rentalContext";
+import { RootStackParamList } from "./src/types/RootStackParamList";
 
 //Screens
 import SignIn from "./src/screens/SignIn";
@@ -12,17 +13,10 @@ import Home from "./src/screens/Home";
 import Profile from "./src/screens/Profile";
 import Save from "./src/screens/Save";
 import MyRentals from "./src/screens/MyRentals";
-import MotorcycleDetail from "./src/screens/Motorcycle-Detail";
+import MotorcycleDetail from "./src/screens/MotorcycleDetail";
 import MyMotorcycles from "./src/screens/MyMotorcycles";
 
 const Tab = createBottomTabNavigator();
-
-export type RootStackParamList = {
-    TabNavigation: undefined; 
-    MotorcycleDetail: undefined; 
-    MyMotorcycles: undefined; 
-    MyRentals: undefined;
-}
 
 const Stack = createStackNavigator<RootStackParamList>();
 

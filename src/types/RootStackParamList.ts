@@ -1,6 +1,8 @@
+import Motorcycle from "./Index";
+
 export type RootStackParamList = {
     TabNavigation: undefined;
-    MotorcycleDetail: {id: number, motorcycleName: string, price: number, image: string}; 
+    MotorcycleDetail: Motorcycle; 
     MyMotorcycles: undefined;
     MyRentals: undefined;
 };

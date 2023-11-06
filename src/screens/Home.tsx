@@ -8,6 +8,7 @@ import MotorcycleList from '../components/MotorcycleList';
 import { ScrollView } from 'react-native-gesture-handler';
 import Header from '../components/Header';
 import Motorcycle from '../types/Index';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
 export default function Home() {
     const {getAllMotorcycles, motorcycles} = useRental();
@@ -17,20 +18,22 @@ export default function Home() {
     }, [])
 
     return(
-        <SafeAreaView>
-            <View style={{paddingHorizontal: 10}}>
-                {/* fix marginTop */}
-                <FlatList
-                    data={motorcycles}
-                    renderItem={( {item}: {item: Motorcycle})=> (
-                        <MotorcycleList {...item}/>
-                    )}
-                    ListHeaderComponent={Header}
-                    showsVerticalScrollIndicator={false}
-                    numColumns={2}
-                    keyExtractor={item=> item.id.toString()}
-                />
-            </View>
-        </SafeAreaView>
+        <BottomSheetModalProvider>
+            <SafeAreaView>
+                <View style={{paddingHorizontal: 10}}>
+                    {/* fix marginTop */}
+                    <FlatList
+                        data={motorcycles}
+                        renderItem={( {item}: {item: Motorcycle})=> (
+                            <MotorcycleList {...item}/>
+                        )}
+                        ListHeaderComponent={Header}
+                        showsVerticalScrollIndicator={false}
+                        numColumns={2}
+                        keyExtractor={item=> item.id.toString()}
+                    />
+                </View>
+            </SafeAreaView>
+        </BottomSheetModalProvider>
     )
 }

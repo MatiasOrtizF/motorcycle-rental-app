@@ -5,6 +5,7 @@ import { useNavigation } from "@react-navigation/native"
 import MyRentals from "./MyRentals";
 import { RootStackParamList } from "../types/RootStackParamList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import styles from "../styles/Styles";
 
 export default function Profile({navigation}: any) {
     const marginTop = Platform.OS === 'android' ? Constants.statusBarHeight : 0;
@@ -30,7 +31,7 @@ export default function Profile({navigation}: any) {
                         <Text style={{marginLeft: 5}}>My Rentals</Text>
                     </TouchableOpacity>
                 </View>
-                    <TouchableOpacity style={{backgroundColor: myColors.dark, width: "100%", alignItems: "center", padding: 10, borderRadius: 50}}>
+                    <TouchableOpacity style={[styles.btn, {width: "100%"}]}>
                         <Text style={{fontWeight: "700", fontSize: 17, color:myColors.light}}>Log Out</Text>
                     </TouchableOpacity>
             </View>
