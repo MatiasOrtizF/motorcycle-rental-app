@@ -1,10 +1,13 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FlatList, Text, View, TextInput, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import Modal from './Modal';
+import { useRental } from '../hooks/rentalContext';
 
 export default function Header() {
+    const {userData} = useRental();
+
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const snapPoints = ["35%"];
 
@@ -19,7 +22,7 @@ export default function Header() {
                     <Image style={{width: 45, height: 45, borderRadius: 50, marginRight: 7}} source={{uri: `https://i.pravatar.cc/150?u=${"JuanPerez"}`}}/>
                     <View>
                         <Text>Welcome 👋</Text>
-                        <Text style={{fontWeight: "600", fontSize: 16}}>Juan Perez</Text>
+                        <Text style={{fontWeight: "600", fontSize: 16}}>{userData.name + " " + userData.lastName}</Text>
                     </View>
                 </View>
                 <TouchableWithoutFeedback onPress={handlePresentModal}>

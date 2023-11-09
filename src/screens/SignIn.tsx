@@ -9,7 +9,7 @@ import { config } from 'process';
 import { AxiosRequestConfig } from 'axios';
 
 export default function SignIn() {
-    const {setConfig, setIsSinged} = useRental();
+    const {setConfig, setIsSinged, setUserData} = useRental();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,10 +19,11 @@ export default function SignIn() {
         login.validationCredentials(userData).then(response=> {
             setConfig({
                 headers: {
-                    'Authorization': response.data,
+                    'Authorization': response.data.token,
                 }
             })
             setIsSinged(true);
+            setUserData(response.data.user);
         }).catch(error=> {
             if (error.response && error.response.status === 400) {
                 alert(error.response.data);
@@ -43,6 +44,7 @@ export default function SignIn() {
                     placeholderTextColor={'white'}
                     onChangeText={setEmail}
                     autoCapitalize='none'
+                    onSubmitEditing={validationLogin}
                 />
                 <Text style={styles.label}>Password</Text>
                 <TextInput
@@ -50,8 +52,9 @@ export default function SignIn() {
                     placeholder='password'
                     placeholderTextColor={'white'}
                     onChangeText={setPassword}
-                    secureTextEntry={true}
                     autoCapitalize='none'
+                    secureTextEntry={true}
+                    onSubmitEditing={validationLogin}
                 />
                 <TouchableOpacity onPress={()=> validationLogin()} style={{backgroundColor: "orange", alignSelf:"flex-end", paddingVertical: 5, paddingHorizontal: 10, borderRadius: 15, marginTop: 10}}>
                     <Text style={{color: myColors.light}}>Submit</Text>

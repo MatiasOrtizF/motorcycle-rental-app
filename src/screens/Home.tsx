@@ -7,7 +7,7 @@ import { myColors } from '../styles/Colors';
 import MotorcycleList from '../components/MotorcycleList';
 import { ScrollView } from 'react-native-gesture-handler';
 import Header from '../components/Header';
-import Motorcycle from '../types/index';
+import {Motorcycle} from '../types/index';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Slider from '@react-native-community/slider';
 

@@ -1,23 +1,26 @@
 import { createContext, ReactNode, useState } from "react";
 import { motorcycle } from "../service/MotorcycleService";
 import { AxiosRequestConfig } from "axios";
-import Motorcycle from "../types/index";
+import { Motorcycle, UserData } from "../types/index";
 import { save } from "../service/SaveService";
 
 export const RentalContext = createContext({
     motorcycles: [] as Motorcycle[],
     motorcyclesSave: [] as Motorcycle[],
     priceRange: 0,
-    setPriceRange: (value: number) => {},
+    setPriceRange: (value: number)=> {},
     gpsSelected: 'all',
-    setGpsSelected: (value: string | boolean) => {},
+    setGpsSelected: (value: string | boolean)=> {},
     setConfig: (config: AxiosRequestConfig)=> {},
-    getAllMotorcycles: () => {},
+    getAllMotorcycles: ()=> {},
     getAllSaveMotorcycles: ()=> {},
     saveMotorcycle: (motorcycleId: number)=> {},
-    setIsSinged: (value: boolean) => {},
+    setIsSinged: (value: boolean)=> {},
     isSinged: false,
-    filteredMotorcycle: [] as Motorcycle[]
+    filteredMotorcycle: [] as Motorcycle[],
+    userData: {} as UserData,
+    setUserData: (value: UserData)=> {},
+    logOut: ()=> {}
 });
 
 interface Props {
@@ -31,11 +34,16 @@ export function RentalProvider({children}: Props) {
     const [motorcyclesSave, setMotorcyclesSave] = useState<Array<Motorcycle>>([]); 
     const [config, setConfig] = useState<AxiosRequestConfig>({
         headers: {
-            'Authorization': "",
+            'Authorization': '',
             'Content-Type': 'application/json'
         }
     })
     const [isSinged, setIsSinged] = useState<boolean>(false);
+    const [userData, setUserData] = useState<UserData>({
+        email: '',
+        lastName: '',
+        name: ''
+    });
 
     const getAllMotorcycles = () => {
         motorcycle.getAll(config).then(response=> {
@@ -60,6 +68,20 @@ export function RentalProvider({children}: Props) {
         }).catch(error=> {
             console.log(error);
         })
+    }
+
+    const logOut = () => {
+        setConfig({
+            headers: {
+                'Authorization': '',
+            }
+        });
+        setIsSinged(false);
+        setUserData({
+            email: '',
+            lastName: '',
+            name: ''
+        });
     }
 
     const filtersMotorcycles = (motorcycles: Motorcycle[]) => {
@@ -87,7 +109,10 @@ export function RentalProvider({children}: Props) {
             getAllSaveMotorcycles,
             motorcyclesSave,
             saveMotorcycle,
-            filteredMotorcycle
+            filteredMotorcycle,
+            userData,
+            setUserData,
+            logOut
         }}>
             {children}
         </RentalContext.Provider>

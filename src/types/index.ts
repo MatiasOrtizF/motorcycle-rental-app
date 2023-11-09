@@ -1,4 +1,4 @@
-export default interface Motorcycle {
+export interface Motorcycle {
     id: number;
     image: string;
     motorcycleName: string;
@@ -9,4 +9,10 @@ export default interface Motorcycle {
     torque: number;
     weight: number;
     fuel: number;
+}
+
+export interface UserData {
+    name: string, 
+    lastName: string,
+    email: string
 }

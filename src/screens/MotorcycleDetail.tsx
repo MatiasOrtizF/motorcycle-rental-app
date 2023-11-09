@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, SafeAreaView, Platform, TouchableOpacity, ImageBackground, Image, Modal } from "react-native";
 import Constants from 'expo-constants';
 import { myColors } from "../styles/Colors";
-import Motorcycle from "../types/index";
+import {Motorcycle} from "../types/index";
 import { RootStackParamList } from "../types/RootStackParamList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from '../styles/Styles';

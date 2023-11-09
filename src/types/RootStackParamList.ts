@@ -1,4 +1,4 @@
-import Motorcycle from "./index";
+import {Motorcycle} from "./index";
 
 export type RootStackParamList = {
     TabNavigation: undefined;
