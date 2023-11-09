@@ -14,6 +14,9 @@ const styles = StyleSheet.create({
         padding: 10, 
         borderRadius: 50
     },
+    btnText: {
+
+    },
     //login
     label: {
         color: 'orange',

@@ -3,6 +3,7 @@ export default interface Motorcycle {
     image: string;
     motorcycleName: string;
     price: number;
+    gps: boolean | string;
     rating: number;
     length: number;
     torque: number;

@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { FlatList, Text, View, TextInput, Image, ImageBackground, TouchableOpacity } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
@@ -6,7 +6,7 @@ import Modal from './Modal';
 
 export default function Header() {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
-    const snapPoints = ["25%", "48%", "75%"];
+    const snapPoints = ["35%"];
 
     function handlePresentModal() {
         bottomSheetModalRef.current?.present();
@@ -33,9 +33,11 @@ export default function Header() {
                 />
             </View>
             <BottomSheetModal
+                activeOffsetY={[-1, 1]}
+                failOffsetX={[-5, 5]}
                 ref={bottomSheetModalRef}
-                index={1}
-                snapPoints={snapPoints}
+                index={0}
+                snapPoints={[245]}
                 backgroundStyle={{ borderRadius: 50, borderWidth: 4 }}
             >
                 <Modal/>

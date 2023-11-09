@@ -1,4 +1,4 @@
-import { Image } from "react-native";
+import { Image, View, Text, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator , StackNavigationProp } from "@react-navigation/stack";
@@ -15,6 +15,8 @@ import Save from "./src/screens/Save";
 import MyRentals from "./src/screens/MyRentals";
 import MotorcycleDetail from "./src/screens/MotorcycleDetail";
 import MyMotorcycles from "./src/screens/MyMotorcycles";
+import CalendarView from "./src/screens/CalenderView";
+import HeaderMotorcycleDeatils from "./src/components/HeaderMotorcycleDetails";
 
 const Tab = createBottomTabNavigator();
 
@@ -82,7 +84,7 @@ export default function Navigation() {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="TabNavigation" component={TabNavigation} options={{headerShown: false}}/>
-                <Stack.Screen name="MotorcycleDetail" component={MotorcycleDetail} options={{title: "Motorcycle Details"}}/>
+                <Stack.Screen name="MotorcycleDetail" component={MotorcycleDetail} options={{headerTitle: ()=> <HeaderMotorcycleDeatils/>}}/>
                 <Stack.Screen name="MyMotorcycles" component={MyMotorcycles}/>
                 <Stack.Screen name="MyRentals" component={MyRentals}/>
             </Stack.Navigator>

@@ -1,11 +1,13 @@
-import React from 'react';
-import { Text, View, SafeAreaView, Platform, TouchableOpacity, ImageBackground, Image } from "react-native";
+import React, { useState } from 'react';
+import { Text, View, SafeAreaView, Platform, TouchableOpacity, ImageBackground, Image, Modal } from "react-native";
 import Constants from 'expo-constants';
 import { myColors } from "../styles/Colors";
-import Motorcycle from "../types/Index";
+import Motorcycle from "../types/index";
 import { RootStackParamList } from "../types/RootStackParamList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from '../styles/Styles';
+import CalendarView from './CalenderView';
+import { Calendar } from 'react-native-calendars';
 
 type motorcycleDetailProps = NativeStackScreenProps<RootStackParamList, 'MotorcycleDetail'>;
 
@@ -13,6 +15,8 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     const {motorcycleName, image, id, price, rating, length ,torque, weight, fuel} = route.params || {};
 
     const marginTop = Platform.OS === 'android' ? Constants.statusBarHeight : 0;
+
+    const [showModal, setShowModal] = useState(false);
 
     return(
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
@@ -37,19 +41,19 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
                         <View style={{flexDirection: "row", justifyContent: "space-between", gap: 10}}>
                             <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
                                 <Text>Length</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{length} mm</Text>
+                                <Text style={{fontWeight: "600", fontSize: 15}}>{length ? length : "n/a"} mm</Text>
                             </View>
                             <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
                                 <Text>Torque</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{torque} Nm</Text>
+                                <Text style={{fontWeight: "600", fontSize: 15}}>{torque ? torque : "n/a"} Nm</Text>
                             </View>
                             <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
                                 <Text>Weight</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{weight} kg</Text>
+                                <Text style={{fontWeight: "600", fontSize: 15}}>{weight ? weight : "n/a"} kg</Text>
                             </View>
                             <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
                                 <Text>FUEL</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{fuel} lts</Text>
+                                <Text style={{fontWeight: "600", fontSize: 15}}>{fuel ? fuel : "n/a"} lts</Text>
                             </View>
                         </View>
                     </View>
@@ -59,10 +63,19 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
                             <Text>Price</Text>
                             <Text style={{fontWeight: "600", fontSize: 17}}>${price} per day</Text>
                         </View>
-                        <TouchableOpacity style={[styles.btn, {width: "50%"}]}>
+                        <TouchableOpacity onPress={()=> setShowModal(!showModal)} style={[styles.btn, {width: "50%"}]}>
                             <Text style={{color: "white"}}>Rental now</Text>
                         </TouchableOpacity>
                     </View>
+
+                    <Modal visible={showModal} animationType='fade'> 
+                        <Calendar
+                            onDayPress={date=> console.log(date)}
+                        />
+                        <TouchableOpacity onPress={()=> setShowModal(!showModal)}>
+                            <Text>Back</Text>
+                        </TouchableOpacity>
+                    </Modal>
                 </View>
             </View>
         </SafeAreaView>

@@ -7,11 +7,12 @@ import { myColors } from '../styles/Colors';
 import MotorcycleList from '../components/MotorcycleList';
 import { ScrollView } from 'react-native-gesture-handler';
 import Header from '../components/Header';
-import Motorcycle from '../types/Index';
+import Motorcycle from '../types/index';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import Slider from '@react-native-community/slider';
 
 export default function Home() {
-    const {getAllMotorcycles, motorcycles} = useRental();
+    const {getAllMotorcycles, motorcycles, filteredMotorcycle} = useRental();
 
     useEffect(()=> {
         getAllMotorcycles();
@@ -23,7 +24,7 @@ export default function Home() {
                 <View style={{paddingHorizontal: 10}}>
                     {/* fix marginTop */}
                     <FlatList
-                        data={motorcycles}
+                        data={filteredMotorcycle}
                         renderItem={( {item}: {item: Motorcycle})=> (
                             <MotorcycleList {...item}/>
                         )}
