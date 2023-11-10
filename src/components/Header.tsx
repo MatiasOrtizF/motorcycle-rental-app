@@ -19,7 +19,7 @@ export default function Header() {
         <View style={{paddingHorizontal: 8}}>
             <View style={{flexDirection: "row", marginBottom: 15, marginTop: 5, justifyContent: "space-between"}}>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
-                    <Image style={{width: 45, height: 45, borderRadius: 50, marginRight: 7}} source={{uri: `https://i.pravatar.cc/150?u=${"JuanPerez"}`}}/>
+                    <Image style={{width: 45, height: 45, borderRadius: 50, marginRight: 7}} source={{uri: `https://i.pravatar.cc/150?u=${userData.name + userData.lastName}`}}/>
                     <View>
                         <Text>Welcome 👋</Text>
                         <Text style={{fontWeight: "600", fontSize: 16}}>{userData.name + " " + userData.lastName}</Text>

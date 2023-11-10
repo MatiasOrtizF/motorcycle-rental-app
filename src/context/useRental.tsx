@@ -63,8 +63,9 @@ export function RentalProvider({children}: Props) {
     }
 
     const saveMotorcycle = (motorcycleId: number) => {
+        console.log(motorcycleId);
         save.saveMotorcycle(config, motorcycleId).then(response=> {
-
+            
         }).catch(error=> {
             console.log(error);
         })

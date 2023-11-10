@@ -12,7 +12,7 @@ import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Slider from '@react-native-community/slider';
 
 export default function Home() {
-    const {getAllMotorcycles, motorcycles, filteredMotorcycle} = useRental();
+    const {getAllMotorcycles, filteredMotorcycle} = useRental();
 
     useEffect(()=> {
         getAllMotorcycles();

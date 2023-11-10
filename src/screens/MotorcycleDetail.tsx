@@ -8,53 +8,60 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from '../styles/Styles';
 import CalendarView from './CalenderView';
 import { Calendar } from 'react-native-calendars';
+import { useRental } from '../hooks/rentalContext';
 
 type motorcycleDetailProps = NativeStackScreenProps<RootStackParamList, 'MotorcycleDetail'>;
 
 export default function MotorcycleDetail({route}: motorcycleDetailProps) {
-    const {motorcycleName, image, id, price, rating, length ,torque, weight, fuel} = route.params || {};
-
-    const marginTop = Platform.OS === 'android' ? Constants.statusBarHeight : 0;
+    const {motorcycleName, image, id, price, rating, length ,torque, weight, fuel, gps} = route.params || {};
+    const {saveMotorcycle} = useRental();
 
     const [showModal, setShowModal] = useState(false);
+    const starArray = Array.from({ length: rating }, (_, index) => index);
+
+    const features = [
+        {title: 'Length', value: length},
+        {title: 'Torque', value: torque},
+        {title: 'Weight', value: weight},
+        {title: 'Fuel', value: fuel},
+    ]
 
     return(
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
-            <View style={{marginTop, flex: 1, justifyContent: "space-between"}}>
+            <View style={{flex: 1, justifyContent: "space-between"}}>
+                <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 15, width: "100%"}}>
+                    <Text style={{width: "90%", fontSize: 20, fontWeight: "700"}}>{motorcycleName}</Text>
+                    <TouchableOpacity onPress={()=> saveMotorcycle(id)} style={{width: "10%", alignSelf: "center"}}>
+                        <Image style={{width: 25, height: 25, alignSelf: "flex-end"}} source={require('../../assets/icons/save-icon.png')} />
+                    </TouchableOpacity>
+                </View>
                 <ImageBackground style={{width: "100%", height: 250}} source={{uri: image}}/>
                 <View style={{padding: 20, borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor: myColors.bgLigth, marginTop: 20}}>
-                    <Text style={{fontSize: 20, fontWeight: "700", alignSelf: "center", paddingHorizontal: 25}}>{motorcycleName}</Text>
-
+                    <Text style={{fontSize: 22, fontWeight: "800", alignSelf: "center", paddingHorizontal: 25}}>Details</Text>
+                    <Text style={{fontWeight: "600", fontSize: 18, marginBottom: 5}}>GPS: {gps ? "Yes" : "No"}</Text>
                     <View>
                         <Text style={{fontWeight: "600", fontSize: 18, marginBottom: 5}}>Rating</Text>
                         <View style={{flexDirection: "row"}}>
-                            <Image style={{width: 18, height: 18}} source={require('../../assets/icons/star-icon-2.png')}/>
-                            <Image style={{width: 18, height: 18}} source={require('../../assets/icons/star-icon-2.png')}/>
-                            <Image style={{width: 18, height: 18}} source={require('../../assets/icons/star-icon-2.png')}/>
-                            <Image style={{width: 18, height: 18}} source={require('../../assets/icons/star-icon-2.png')}/>
-                            <Image style={{width: 18, height: 18}} source={require('../../assets/icons/star-half-icon-2.png')}/>
+                            {starArray.map((index)=> (
+                                <Image key={index} style={{width: 18, height: 18}} source={require('../../assets/icons/star-icon-2.png')}/>
+                            ))}
+                            {rating % 1 !== 0 ?
+                                <Image style={{width: 18, height: 18}} source={require('../../assets/icons/star-half-icon-2.png')}/>
+                            :
+                                null
+                            }
                         </View>
                     </View>
 
                     <View style={{paddingVertical: 15}}>
                         <Text style={{fontWeight: "600", fontSize: 18, marginBottom: 5}}>Features</Text>
                         <View style={{flexDirection: "row", justifyContent: "space-between", gap: 10}}>
-                            <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
-                                <Text>Length</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{length ? length : "n/a"} mm</Text>
-                            </View>
-                            <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
-                                <Text>Torque</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{torque ? torque : "n/a"} Nm</Text>
-                            </View>
-                            <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
-                                <Text>Weight</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{weight ? weight : "n/a"} kg</Text>
-                            </View>
-                            <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
-                                <Text>FUEL</Text>
-                                <Text style={{fontWeight: "600", fontSize: 15}}>{fuel ? fuel : "n/a"} lts</Text>
-                            </View>
+                            {features.map(feature => (
+                                <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
+                                    <Text>{feature.title}</Text>
+                                    <Text style={{fontWeight: "600", fontSize: 15}}>{feature.value ? feature.value : "n/a"} mm</Text>
+                                </View>
+                            ))}
                         </View>
                     </View>
 

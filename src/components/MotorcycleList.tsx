@@ -10,13 +10,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 type MotorcycleDetailProps = NativeStackScreenProps<RootStackParamList, 'MotorcycleDetail'>;
 
-export default React.memo(function MotorcycleList({id, image, motorcycleName, price, rating, length ,torque, weight, fuel}: Motorcycle) {
+export default React.memo(function MotorcycleList({id, image, motorcycleName, price, rating, length ,torque, weight, fuel, gps}: Motorcycle) {
     
     const navigation:any = useNavigation<MotorcycleDetailProps>();
 
     return (
         <View style={{backgroundColor: "white", flex: 0.5, marginVertical: 10, marginHorizontal: 8, borderRadius: 10, overflow: "hidden"}}>
-            <TouchableOpacity onPress={()=> navigation.navigate('MotorcycleDetail', {motorcycleName, image, id, price, rating, length ,torque, weight, fuel})}>
+            <TouchableOpacity onPress={()=> navigation.navigate('MotorcycleDetail', {motorcycleName, image, id, price, rating, length ,torque, weight, fuel, gps})}>
                 <ImageBackground style={{width: "100%", height: 100}} source={{uri: image}}/>
                 <View style={{paddingHorizontal: 5, paddingBottom: 5}}>
                     <Text numberOfLines={1} ellipsizeMode='tail' style={{marginVertical: 5, fontWeight: '800'}}>{motorcycleName}</Text>

@@ -19,7 +19,7 @@ export default function Profile({navigation}: any) {
                 <View>
                     <Text style={{alignSelf: "center", fontWeight: "700", fontSize: 17}}>Profile</Text>
                     <View style={{alignItems:"center", marginVertical: 20}}>
-                        <Image style={{width: 100, height: 100, borderRadius: 50, marginVertical: 10}} source={{uri: `https://i.pravatar.cc/150?u=${"JuanPerez"}`}}/>
+                        <Image style={{width: 100, height: 100, borderRadius: 50, marginVertical: 10}} source={{uri: `https://i.pravatar.cc/150?u=${userData.name + userData.lastName}`}}/>
                         <Text style={{fontWeight: "600", fontSize: 20}}>{userData.name +" "+ userData.lastName}</Text>
                         <Text style={{fontSize: 17}}>{userData.email}</Text>
                     </View>

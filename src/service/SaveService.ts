@@ -8,6 +8,6 @@ export const save = {
         return instance.get(endpoint, config);
     },
     saveMotorcycle: function(config: any, motorcycleId: number) {
-        return instance.post(endpoint + "?motorcycleId=" + motorcycleId, config);
+        return instance.post(endpoint + "?motorcycleId=" + motorcycleId, null, config);
     }
 }
