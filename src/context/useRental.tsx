@@ -1,8 +1,10 @@
 import { createContext, ReactNode, useState } from "react";
 import { motorcycle } from "../service/MotorcycleService";
 import { AxiosRequestConfig } from "axios";
-import { Motorcycle, UserData } from "../types/index";
+import { Motorcycle, MyRentals, UserData } from "../types/index";
 import { save } from "../service/SaveService";
+import { user } from "../service/UserService";
+import { error } from "console";
 
 export const RentalContext = createContext({
     motorcycles: [] as Motorcycle[],
@@ -20,6 +22,8 @@ export const RentalContext = createContext({
     filteredMotorcycle: [] as Motorcycle[],
     userData: {} as UserData,
     setUserData: (value: UserData)=> {},
+    myRentals: [] as MyRentals[],
+    myRentalsByUser: ()=> {},
     logOut: ()=> {}
 });
 
@@ -44,6 +48,7 @@ export function RentalProvider({children}: Props) {
         lastName: '',
         name: ''
     });
+    const [myRentals, setMyRentals] = useState<Array<MyRentals>>([]);
 
     const getAllMotorcycles = () => {
         motorcycle.getAll(config).then(response=> {
@@ -62,10 +67,17 @@ export function RentalProvider({children}: Props) {
         })
     }
 
-    const saveMotorcycle = (motorcycleId: number) => {
-        console.log(motorcycleId);
+    const saveMotorcycle = (motorcycleId: number) => {;
         save.saveMotorcycle(config, motorcycleId).then(response=> {
             
+        }).catch(error=> {
+            console.log(error);
+        })
+    }
+
+    const myRentalsByUser = () => {
+        user.getRentalByUser(config).then(response=> {
+            setMyRentals(response.data);
         }).catch(error=> {
             console.log(error);
         })
@@ -113,6 +125,8 @@ export function RentalProvider({children}: Props) {
             filteredMotorcycle,
             userData,
             setUserData,
+            myRentals,
+            myRentalsByUser,
             logOut
         }}>
             {children}

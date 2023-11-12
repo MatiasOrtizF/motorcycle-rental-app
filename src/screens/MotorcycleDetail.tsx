@@ -19,6 +19,9 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     const [showModal, setShowModal] = useState(false);
     const starArray = Array.from({ length: rating }, (_, index) => index);
 
+    const [dayRental, setDayRental] = useState('');
+    const [dayReturn, setDayReturn] = useState('');
+
     const features = [
         {title: 'Length', value: length},
         {title: 'Torque', value: torque},
@@ -77,11 +80,25 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
 
                     <Modal visible={showModal} animationType='fade'> 
                         <Calendar
-                            onDayPress={date=> console.log(date)}
+                            onDayPress={date=> setDayRental(date.dateString)}
+                            minDate={new Date().toISOString()}
+                            markingType={'period'}
+                            markedDates={{
+                                [dayRental]: {startingDay: true, color: "lightgreen"},
+                                '2023-11-24': {endingDay: true, color: "lightgreen"}
+                            }}
                         />
-                        <TouchableOpacity onPress={()=> setShowModal(!showModal)}>
-                            <Text>Back</Text>
-                        </TouchableOpacity>
+                        <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20}}>
+                            <TouchableOpacity style={styles.btn} onPress={()=> setShowModal(!showModal)}>
+                                <Text style={{color: "white"}}>Back</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.btn}>
+                                <Text style={{color: "white"}}>Rental</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <Text>Date rental:{dayRental}</Text>
+                        <Text>Date return:{dayReturn}</Text>
+                        <Text>Total price:</Text>
                     </Modal>
                 </View>
             </View>
