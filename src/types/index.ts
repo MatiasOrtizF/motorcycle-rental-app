@@ -11,6 +11,11 @@ export interface Motorcycle {
     fuel: number
 }
 
+export interface UserLoginData {
+    email: string,
+    password: string
+}
+
 export interface UserData {
     name: string
     lastName: string
@@ -27,8 +32,8 @@ export interface MyRentals {
 }
 
 export interface RentalData {
-    dayRental: string
-    dayReturn: string
+    dateRental: Date
+    dateReturn: Date
     totalPrice: number
     motorcycle: {
         id: number

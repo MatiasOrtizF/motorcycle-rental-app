@@ -15,7 +15,9 @@ const styles = StyleSheet.create({
         borderRadius: 50
     },
     btnText: {
-
+        fontWeight: "700", 
+        fontSize: 17, 
+        color:myColors.light
     },
     //login
     label: {

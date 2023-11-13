@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { FlatList, Text, View, TextInput, Image, ImageBackground, TouchableOpacity } from 'react-native';
+import { useRef } from 'react';
+import { Text, View, TextInput, Image } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import Modal from './Modal';

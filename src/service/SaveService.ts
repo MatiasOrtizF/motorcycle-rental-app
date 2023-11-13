@@ -1,16 +1,17 @@
+import { AxiosRequestConfig } from "axios";
 import { motorcycle } from "./MotorcycleService";
 import { instance } from "./base";
 
 const endpoint = "save";
 
 export const save = {
-    getAllByUser: function(config: any) {
+    getAllByUser: function(config: AxiosRequestConfig) {
         return instance.get(endpoint, config);
     },
-    saveMotorcycle: function(config: any, motorcycleId: number) {
+    saveMotorcycle: function(config: AxiosRequestConfig, motorcycleId: number) {
         return instance.post(endpoint + "?motorcycleId=" + motorcycleId, null, config);
     },
-    unsaveMotorcycle: function(config: any, motorcycleId: number) {
+    unsaveMotorcycle: function(config: AxiosRequestConfig, motorcycleId: number) {
         return instance.delete(endpoint + "?motorcycleId=" + motorcycleId, config);
     }
 }

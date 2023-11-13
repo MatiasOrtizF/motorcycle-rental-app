@@ -1,10 +1,7 @@
 import { Text, View, TouchableOpacity, Image, ImageBackground } from 'react-native';
-import { myColors } from '../styles/Colors';
 import React from 'react';
-import { motorcycle } from '../service/MotorcycleService';
 import {Motorcycle} from '../types/index';
 import { useNavigation } from '@react-navigation/native';
-import { createStackNavigator , StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from '../types/RootStackParamList';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 

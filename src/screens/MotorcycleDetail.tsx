@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, SafeAreaView, Platform, TouchableOpacity, ImageBackground, Image, Modal } from "react-native";
-import Constants from 'expo-constants';
+import { Text, View, SafeAreaView, TouchableOpacity, ImageBackground, Image, Modal } from "react-native";
 import { myColors } from "../styles/Colors";
-import {Motorcycle} from "../types/index";
 import { RootStackParamList } from "../types/RootStackParamList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from '../styles/Styles';
-import CalendarView from './CalenderView';
 import { Calendar } from 'react-native-calendars';
 import { useRental } from '../hooks/rentalContext';
 
@@ -14,7 +11,7 @@ type motorcycleDetailProps = NativeStackScreenProps<RootStackParamList, 'Motorcy
 
 export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     const {motorcycleName, image, id, price, rating, length ,torque, weight, fuel, gps} = route.params || {};
-    const {saveMotorcycle} = useRental();
+    const {saveMotorcycle, addRental} = useRental();
 
     const [showModal, setShowModal] = useState(false);
     const starArray = Array.from({ length: rating }, (_, index) => index);
@@ -22,7 +19,7 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     const [dayRental, setDayRental] = useState('');
     const [dayReturn, setDayReturn] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
-
+    
     const features = [
         {title: 'Length', value: length},
         {title: 'Torque', value: torque},
@@ -82,8 +79,8 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
                     <View style={{paddingVertical: 15}}>
                         <Text style={{fontWeight: "600", fontSize: 18, marginBottom: 5}}>Features</Text>
                         <View style={{flexDirection: "row", justifyContent: "space-between", gap: 10}}>
-                            {features.map(feature => (
-                                <View style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
+                            {features.map((feature, index) => (
+                                <View key={index} style={{backgroundColor: "white", borderRadius: 10, padding: 10}}>
                                     <Text>{feature.title}</Text>
                                     <Text style={{fontWeight: "600", fontSize: 15}}>{feature.value ? feature.value : "n/a"} mm</Text>
                                 </View>
@@ -97,13 +94,13 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
                             <Text style={{fontWeight: "600", fontSize: 17}}>${price} per day</Text>
                         </View>
                         <TouchableOpacity onPress={()=> setShowModal(!showModal)} style={[styles.btn, {width: "50%"}]}>
-                            <Text style={{color: "white"}}>Rental now</Text>
+                            <Text style={styles.btnText}>Rental now</Text>
                         </TouchableOpacity>
                     </View>
 
                     <Modal visible={showModal} animationType='fade'> 
                         <Calendar
-                            onDayPress={date=> dayRental.length > 0 ? new Date(date.dateString) < new Date(dayRental) ? setDayRental(date.dateString) : setDayReturn(date.dateString) : setDayRental(date.dateString)}
+                            onDayPress={date=> dayRental.length > 0 ? new Date(date.dateString) < new Date(dayRental) ? (date.dateString) : setDayReturn(date.dateString) : setDayRental(date.dateString)}
                             minDate={new Date().toISOString()}
                             markingType={'period'}
                             markedDates={{
@@ -112,17 +109,42 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
                             }}
                         />
                         <View style={{paddingHorizontal: 20}}>
-                            <View style={{flexDirection: "row", justifyContent: "space-between"}}>
-                                <TouchableOpacity style={styles.btn} onPress={()=> setShowModal(!showModal)}>
-                                    <Text style={{color: "white"}}>Back</Text>
+                            <View style={{flexDirection: "row", justifyContent: "space-between", width: "100%", marginVertical: 35}}>
+                                <TouchableOpacity style={[styles.btn, {width: "47%"}]} onPress={()=> setShowModal(!showModal)}>
+                                    <Text style={{color: "white", fontWeight: "600", fontSize: 15}}>Back</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}>
-                                    <Text style={{color: "white"}}>Confirm</Text>
+                                <TouchableOpacity onPress={()=> {
+                                    const dataRental = { 
+                                        dateRental: new Date(dayRental),
+                                        dateReturn: new Date(dayReturn),
+                                        totalPrice: totalPrice,
+                                        motorcycle: {
+                                            id: id
+                                        }
+                                    }; 
+                                        addRental(dataRental)
+                                    }} 
+                                    style={[styles.btn, {width: "47%"}]}
+                                >
+                                    <Text style={{color: "white", fontWeight: "600", fontSize: 15}}>Confirm</Text>
                                 </TouchableOpacity>
                             </View>
-                            <Text>Date rental: {dayRental}</Text>
-                            <Text>Date return: {dayReturn}</Text>
-                            <Text>Total price: ${totalPrice}</Text>
+                            <View>
+                                <Text style={{fontWeight: "600", fontSize: 18, marginBottom: 5}}>Payment status</Text>
+                                <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                    <Text>Date rental</Text>
+                                    <Text style={{fontWeight: "600"}}>{dayRental}</Text>
+                                </View>
+                                <View style={{flexDirection: "row", justifyContent: "space-between", marginTop: 5}}>
+                                    <Text>Date return</Text>
+                                    <Text style={{fontWeight: "600"}}>{dayReturn}</Text>
+                                </View>
+                                <View style={{ backgroundColor: 'black', height: 1.5, marginVertical: 10 }} />
+                                <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                    <Text>Total price</Text>
+                                    <Text style={{fontWeight: "600"}}>${totalPrice}</Text>
+                                </View>
+                            </View>
                         </View>
                     </Modal>
                 </View>

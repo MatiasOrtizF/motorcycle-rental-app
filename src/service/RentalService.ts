@@ -1,10 +1,11 @@
-import { MyRentals } from "../types";
+import { AxiosRequestConfig } from "axios";
+import { RentalData } from "../types";
 import { instance } from "./base";
 
 const endpoint = "rental";
 
 export const rental = {
-    saveMotorcycle: function(config: any, rentalData: MyRentals) {
-        return instance.post(endpoint + rentalData, config);
+    addRental: function(config: AxiosRequestConfig, rentalData: RentalData) {
+        return instance.post(endpoint, rentalData, config);
     }
 }

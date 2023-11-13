@@ -1,9 +1,10 @@
+import { UserData, UserLoginData } from "../types";
 import { instance } from "./base";
 
 const endpoint = "login";
 
 export const login = {
-    validationCredentials: function(userData: any) { //change any type
-        return instance.post(endpoint, userData);
+    validationCredentials: function(userLoginData: UserLoginData) { //change any type
+        return instance.post(endpoint, userLoginData);
     }
 }

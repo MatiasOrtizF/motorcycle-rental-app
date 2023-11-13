@@ -3,9 +3,8 @@ import { motorcycle } from "../service/MotorcycleService";
 import { AxiosRequestConfig } from "axios";
 import { Motorcycle, MyRentals, RentalData, UserData } from "../types/index";
 import { save } from "../service/SaveService";
-import { user } from "../service/UserService";
-import { error } from "console";
-import { Alert } from "react-native";
+import { user } from "../service/UserService";;
+import { rental } from "../service/RentalService";
 
 export const RentalContext = createContext({
     motorcycles: [] as Motorcycle[],
@@ -26,7 +25,7 @@ export const RentalContext = createContext({
     setUserData: (value: UserData)=> {},
     myRentals: [] as MyRentals[],
     myRentalsByUser: ()=> {},
-    rentalData: {} as RentalData,
+    addRental: (renalData: RentalData)=> {},
     logOut: ()=> {}
 });
 
@@ -52,14 +51,15 @@ export function RentalProvider({children}: Props) {
         name: ''
     });
     const [myRentals, setMyRentals] = useState<Array<MyRentals>>([]);
-    const [rentalData, setRentalData] = useState<RentalData>({
-        dayRental: '',
-        dayReturn: '',
-        totalPrice: 0,
-        motorcycle: {
-            id: 0
-        },
-    });
+
+    // const [rentalData, setRentalData] = useState<RentalData>({
+    //     dayRental: '',
+    //     dayReturn: '',
+    //     totalPrice: 0,
+    //     motorcycle: {
+    //         id: 0
+    //     },
+    // });
 
     const getAllMotorcycles = () => {
         motorcycle.getAll(config).then(response=> {
@@ -134,6 +134,15 @@ export function RentalProvider({children}: Props) {
         })
     }
 
+    const addRental = (rentalData: RentalData) => {
+        console.log(rentalData);
+        rental.addRental(config, rentalData).then(response=> {
+            
+        }).catch(error=> {
+            console.log(error);
+        })
+    }
+
     const logOut = () => {
         setConfig({
             headers: {
@@ -179,7 +188,7 @@ export function RentalProvider({children}: Props) {
             setUserData,
             myRentals,
             myRentalsByUser,
-            rentalData,
+            addRental,
             logOut
         }}>
             {children}

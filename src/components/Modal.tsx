@@ -1,10 +1,9 @@
 import Slider from '@react-native-community/slider';
-import { useEffect, useState } from 'react';
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { useRental } from '../hooks/rentalContext';
 
 export default function Modal () {
-    const { priceRange, setPriceRange, gpsSelected, setGpsSelected} = useRental();
+    const {priceRange, setPriceRange, gpsSelected, setGpsSelected} = useRental();
 
     const gpsButtons = [
         {title: 'All', value: "all"},

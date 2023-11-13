@@ -21,9 +21,9 @@ export default function SignIn() {
     }
 
     const validationLogin = () => {
-        const userData = {email, password}
-        if(validationEmail(userData.email)) {
-            login.validationCredentials(userData).then(response=> {
+        const userLoginData = {email, password}
+        if(validationEmail(userLoginData.email)) {
+            login.validationCredentials(userLoginData).then(response=> {
                 setConfig({
                     headers: {
                         'Authorization': response.data.token,
