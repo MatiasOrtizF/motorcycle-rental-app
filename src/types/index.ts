@@ -25,3 +25,12 @@ export interface MyRentals {
     user: UserData
     motorcycle: Motorcycle
 }
+
+export interface RentalData {
+    dayRental: string
+    dayReturn: string
+    totalPrice: number
+    motorcycle: {
+        id: number
+    }
+}

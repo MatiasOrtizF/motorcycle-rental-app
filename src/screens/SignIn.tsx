@@ -14,23 +14,35 @@ export default function SignIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    function validationEmail(email: string) {
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        return regexEmail.test(email);
+    }
+
     const validationLogin = () => {
         const userData = {email, password}
-        login.validationCredentials(userData).then(response=> {
-            setConfig({
-                headers: {
-                    'Authorization': response.data.token,
+        if(validationEmail(userData.email)) {
+            login.validationCredentials(userData).then(response=> {
+                setConfig({
+                    headers: {
+                        'Authorization': response.data.token,
+                    }
+                })
+                setIsSinged(true);
+                setUserData(response.data.user);
+            }).catch(error=> {
+                if (error.response.status === 401) {
+                    alert(error.response.data);
+                } else if(error.response.status === 400) {
+                    alert(error.response.data);
+                } else {
+                    console.error("Error:", error);
                 }
             })
-            setIsSinged(true);
-            setUserData(response.data.user);
-        }).catch(error=> {
-            if (error.response && error.response.status === 400) {
-                alert(error.response.data);
-            } else {
-                console.error("Error:", error);
-            }
-        })
+        } else {
+            alert("Please enter a valid email.")
+        }
     }
 
     return (

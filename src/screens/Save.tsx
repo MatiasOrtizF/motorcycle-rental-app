@@ -8,7 +8,7 @@ import { useRental } from '../hooks/rentalContext';
 import { motorcycle } from '../service/MotorcycleService';
 
 export default function Save() {
-    const {getAllSaveMotorcycles, motorcyclesSave} = useRental();
+    const {getAllSaveMotorcycles, motorcyclesSave, unsaveMotorcycle} = useRental();
 
     useEffect(()=> {
         getAllSaveMotorcycles();
@@ -31,7 +31,7 @@ export default function Save() {
                             <TouchableOpacity style={{marginRight: 5, backgroundColor: myColors.dark, paddingHorizontal: 15 , paddingVertical: 5, borderRadius: 50}}>
                                 <Text style={{color: myColors.light}}>Rental</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ backgroundColor: "gray", width: 30, height: 30, borderRadius: 50, justifyContent: "center",alignItems: "center",}}>
+                            <TouchableOpacity onPress={()=> unsaveMotorcycle(motorcycle.id)} style={{ backgroundColor: "gray", width: 30, height: 30, borderRadius: 50, justifyContent: "center",alignItems: "center",}}>
                                 <Image style={{width: 15, height: 15}} source={require('../../assets/icons/saved-icon.png')}/>
                             </TouchableOpacity>
                         </View>

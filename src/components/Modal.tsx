@@ -15,7 +15,7 @@ export default function Modal () {
     return(
         <View style={{paddingHorizontal: 15, alignItems:"center"}}>
             <Text style={{marginBottom: 15, fontSize: 19, fontWeight: "800"}}>Filter your search</Text>
-            <Text style={{fontSize: 17, fontWeight: "800"}}>Price Range</Text>
+            <Text style={{fontSize: 17, fontWeight: "800"}}>Min Price Range</Text>
             <Slider 
                 style={{width: "100%", height: 40}}
                 minimumValue={0}

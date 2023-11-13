@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, View, SafeAreaView, Platform, TouchableOpacity, ImageBackground, Image, Modal } from "react-native";
 import Constants from 'expo-constants';
 import { myColors } from "../styles/Colors";
@@ -21,6 +21,7 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
 
     const [dayRental, setDayRental] = useState('');
     const [dayReturn, setDayReturn] = useState('');
+    const [totalPrice, setTotalPrice] = useState(0);
 
     const features = [
         {title: 'Length', value: length},
@@ -29,6 +30,28 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
         {title: 'Fuel', value: fuel},
     ]
 
+    useEffect(()=> {
+        setDayRental('');
+        setDayReturn('');
+        setTotalPrice(0);
+    }, [showModal])
+
+    useEffect(()=> {
+        calculateTotalPrice(dayRental, dayReturn);
+    },[dayRental, dayReturn])
+
+    const calculateTotalPrice = (dayRental: string, dayReturn: string) => {
+        if(dayRental.trim() && dayReturn.trim()) {
+            const start = new Date(dayRental).getTime();
+            const end = new Date(dayReturn).getTime();
+    
+            const miliSecondsPerDay = 24 * 60 * 60 * 1000; // milisegundos en un dia
+    
+            let days = Math.round((end - start) / miliSecondsPerDay)
+    
+            setTotalPrice(price*days);
+        }
+    }
     return(
         <SafeAreaView style={{flex: 1, backgroundColor: "white"}}>
             <View style={{flex: 1, justifyContent: "space-between"}}>
@@ -80,25 +103,27 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
 
                     <Modal visible={showModal} animationType='fade'> 
                         <Calendar
-                            onDayPress={date=> setDayRental(date.dateString)}
+                            onDayPress={date=> dayRental.length > 0 ? new Date(date.dateString) < new Date(dayRental) ? setDayRental(date.dateString) : setDayReturn(date.dateString) : setDayRental(date.dateString)}
                             minDate={new Date().toISOString()}
                             markingType={'period'}
                             markedDates={{
                                 [dayRental]: {startingDay: true, color: "lightgreen"},
-                                '2023-11-24': {endingDay: true, color: "lightgreen"}
+                                [dayReturn]: {endingDay: true, color: "lightgreen"}
                             }}
                         />
-                        <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 20}}>
-                            <TouchableOpacity style={styles.btn} onPress={()=> setShowModal(!showModal)}>
-                                <Text style={{color: "white"}}>Back</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}>
-                                <Text style={{color: "white"}}>Rental</Text>
-                            </TouchableOpacity>
+                        <View style={{paddingHorizontal: 20}}>
+                            <View style={{flexDirection: "row", justifyContent: "space-between"}}>
+                                <TouchableOpacity style={styles.btn} onPress={()=> setShowModal(!showModal)}>
+                                    <Text style={{color: "white"}}>Back</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text style={{color: "white"}}>Confirm</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <Text>Date rental: {dayRental}</Text>
+                            <Text>Date return: {dayReturn}</Text>
+                            <Text>Total price: ${totalPrice}</Text>
                         </View>
-                        <Text>Date rental:{dayRental}</Text>
-                        <Text>Date return:{dayReturn}</Text>
-                        <Text>Total price:</Text>
                     </Modal>
                 </View>
             </View>

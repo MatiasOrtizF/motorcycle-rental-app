@@ -9,5 +9,8 @@ export const save = {
     },
     saveMotorcycle: function(config: any, motorcycleId: number) {
         return instance.post(endpoint + "?motorcycleId=" + motorcycleId, null, config);
+    },
+    unsaveMotorcycle: function(config: any, motorcycleId: number) {
+        return instance.delete(endpoint + "?motorcycleId=" + motorcycleId, config);
     }
 }

@@ -1,10 +1,11 @@
 import { createContext, ReactNode, useState } from "react";
 import { motorcycle } from "../service/MotorcycleService";
 import { AxiosRequestConfig } from "axios";
-import { Motorcycle, MyRentals, UserData } from "../types/index";
+import { Motorcycle, MyRentals, RentalData, UserData } from "../types/index";
 import { save } from "../service/SaveService";
 import { user } from "../service/UserService";
 import { error } from "console";
+import { Alert } from "react-native";
 
 export const RentalContext = createContext({
     motorcycles: [] as Motorcycle[],
@@ -17,6 +18,7 @@ export const RentalContext = createContext({
     getAllMotorcycles: ()=> {},
     getAllSaveMotorcycles: ()=> {},
     saveMotorcycle: (motorcycleId: number)=> {},
+    unsaveMotorcycle: (motorcycleId: number) => {},
     setIsSinged: (value: boolean)=> {},
     isSinged: false,
     filteredMotorcycle: [] as Motorcycle[],
@@ -24,6 +26,7 @@ export const RentalContext = createContext({
     setUserData: (value: UserData)=> {},
     myRentals: [] as MyRentals[],
     myRentalsByUser: ()=> {},
+    rentalData: {} as RentalData,
     logOut: ()=> {}
 });
 
@@ -49,11 +52,23 @@ export function RentalProvider({children}: Props) {
         name: ''
     });
     const [myRentals, setMyRentals] = useState<Array<MyRentals>>([]);
+    const [rentalData, setRentalData] = useState<RentalData>({
+        dayRental: '',
+        dayReturn: '',
+        totalPrice: 0,
+        motorcycle: {
+            id: 0
+        },
+    });
 
     const getAllMotorcycles = () => {
         motorcycle.getAll(config).then(response=> {
             setMotorcycles(response.data);
         }).catch(error=> {
+            if(error.response.status === 401) {
+                alert("Your session has expired. Please log in again.");
+                logOut();
+            }
             console.log(error);
         })
     }
@@ -63,15 +78,47 @@ export function RentalProvider({children}: Props) {
             const motorcyclesData = response.data.map((item: any) => item.motorcycle)
             setMotorcyclesSave(motorcyclesData);
         }).catch(error=> {
+            if(error.response.status === 401) {
+                alert("Your session has expired. Please log in again.");
+                logOut();
+            }
             console.log(error);
         })
     }
 
     const saveMotorcycle = (motorcycleId: number) => {;
         save.saveMotorcycle(config, motorcycleId).then(response=> {
-            
+            getAllSaveMotorcycles();
         }).catch(error=> {
-            console.log(error);
+            if(error.response.status === 400) {
+                alert("This motorcycle Has already saved."); //The user has already saved this motorcycle
+            } else if(error.response.status === 404) {
+                alert(error.response.data); //Motorcycle or User does not exist
+            } else if(error.response.status === 401) {
+                alert("Your session has expired. Please log in again.");
+                logOut();
+            }
+            else {
+                console.error("Error", error);
+            }
+        })
+    }
+
+    const unsaveMotorcycle = (motorcycleId: number) => {
+        save.unsaveMotorcycle(config, motorcycleId).then(response=> {
+            getAllSaveMotorcycles();
+        }).catch(error=> {
+            if(error.response.status === 403) {
+                alert(error.response.data); //User Mismatch
+            } else if(error.response.status === 404) {
+                alert(error.response.data); //Motorcycle or User does not exist
+            } else if(error.response.status === 401) {
+                alert("Your session has expired. Please log in again.");
+                logOut();
+            }
+            else {
+                console.error("Error", error);
+            }
         })
     }
 
@@ -79,7 +126,11 @@ export function RentalProvider({children}: Props) {
         user.getRentalByUser(config).then(response=> {
             setMyRentals(response.data);
         }).catch(error=> {
-            console.log(error);
+            if(error.response.status === 401) {
+                alert("Your session has expired. Please log in again.");
+                logOut();
+            }
+            console.log(error); 
         })
     }
 
@@ -122,11 +173,13 @@ export function RentalProvider({children}: Props) {
             getAllSaveMotorcycles,
             motorcyclesSave,
             saveMotorcycle,
+            unsaveMotorcycle,
             filteredMotorcycle,
             userData,
             setUserData,
             myRentals,
             myRentalsByUser,
+            rentalData,
             logOut
         }}>
             {children}
