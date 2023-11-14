@@ -11,8 +11,8 @@ import { AxiosRequestConfig } from 'axios';
 export default function SignIn() {
     const {setConfig, setIsSinged, setUserData} = useRental();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
 
     function validationEmail(email: string) {
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from '../styles/Styles';
 import { Calendar } from 'react-native-calendars';
 import { useRental } from '../hooks/rentalContext';
+import { Features } from '../types';
 
 type motorcycleDetailProps = NativeStackScreenProps<RootStackParamList, 'MotorcycleDetail'>;
 
@@ -13,14 +14,14 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     const {motorcycleName, image, id, price, rating, length ,torque, weight, fuel, gps} = route.params || {};
     const {saveMotorcycle, addRental} = useRental();
 
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
     const starArray = Array.from({ length: rating }, (_, index) => index);
 
-    const [dayRental, setDayRental] = useState('');
-    const [dayReturn, setDayReturn] = useState('');
-    const [totalPrice, setTotalPrice] = useState(0);
+    const [dayRental, setDayRental] = useState<string>('');
+    const [dayReturn, setDayReturn] = useState<string>('');
+    const [totalPrice, setTotalPrice] = useState<number>(0);
     
-    const features = [
+    const features: Features[] = [
         {title: 'Length', value: length},
         {title: 'Torque', value: torque},
         {title: 'Weight', value: weight},
@@ -39,12 +40,12 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
 
     const calculateTotalPrice = (dayRental: string, dayReturn: string) => {
         if(dayRental.trim() && dayReturn.trim()) {
-            const start = new Date(dayRental).getTime();
-            const end = new Date(dayReturn).getTime();
+            const start:number = new Date(dayRental).getTime();
+            const end:number = new Date(dayReturn).getTime();
     
-            const miliSecondsPerDay = 24 * 60 * 60 * 1000; // milisegundos en un dia
+            const miliSecondsPerDay:number = 24 * 60 * 60 * 1000; // milisegundos en un dia
     
-            let days = Math.round((end - start) / miliSecondsPerDay)
+            let days:number = Math.round((end - start) / miliSecondsPerDay)
     
             setTotalPrice(price*days);
         }

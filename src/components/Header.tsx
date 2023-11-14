@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Text, View, TextInput, Image } from 'react-native';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
@@ -6,7 +6,9 @@ import Modal from './Modal';
 import { useRental } from '../hooks/rentalContext';
 
 export default function Header() {
-    const {userData} = useRental();
+    const {userData, searchByWord} = useRental();
+
+    const [word, setWord] = useState<string>('');
 
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const snapPoints = ["35%"];
@@ -33,6 +35,9 @@ export default function Header() {
                 <TextInput
                     style={{backgroundColor: "white", borderRadius: 50, height: 40, paddingHorizontal: 15, marginBottom: 10}}
                     placeholder='Search your motorcycle'
+                    onChangeText={setWord}
+                    autoCapitalize='none'
+                    onSubmitEditing={()=> searchByWord(word)}
                 />
             </View>
             <BottomSheetModal

@@ -5,6 +5,9 @@ import { Motorcycle, MyRentals, RentalData, UserData } from "../types/index";
 import { save } from "../service/SaveService";
 import { user } from "../service/UserService";;
 import { rental } from "../service/RentalService";
+import { error } from "console";
+import { Alert } from "react-native";
+import { useEvent } from "react-native-reanimated";
 
 export const RentalContext = createContext({
     motorcycles: [] as Motorcycle[],
@@ -26,7 +29,9 @@ export const RentalContext = createContext({
     myRentals: [] as MyRentals[],
     myRentalsByUser: ()=> {},
     addRental: (renalData: RentalData)=> {},
-    logOut: ()=> {}
+    cancelMyRental: (rentalId: number)=> {},
+    logOut: ()=> {},
+    searchByWord: (value: string)=> {}
 });
 
 interface Props {
@@ -135,12 +140,41 @@ export function RentalProvider({children}: Props) {
     }
 
     const addRental = (rentalData: RentalData) => {
-        console.log(rentalData);
-        rental.addRental(config, rentalData).then(response=> {
-            
-        }).catch(error=> {
-            console.log(error);
-        })
+        if(rentalData.dateRental.toDateString().trim() && rentalData.dateReturn.toDateString().trim() && rentalData.totalPrice > 0) {
+            Alert.alert(
+                'Confirm Rental',
+                'Are you sure you want to proceed with rentin?',
+                [
+                    { text: 'Cancel'},
+                    { text: 'Yes', onPress: () => 
+                        rental.addRental(config, rentalData).then(response=> {
+                    
+                        }).catch(error=> {
+                            console.log(error);
+                        })
+                    },
+                ]
+            );
+        } else {
+            alert("Please select a rental start date and return date.");
+        }
+    }
+
+    const cancelMyRental = (rentalId: number)=> {
+        Alert.alert(
+            'Confirm Rental Cancellation',
+            'Are you sure you want to proceed with canceling the rental?',
+            [
+                { text: 'Cancel'},
+                { text: 'Yes', onPress: () => 
+                    rental.deleteRental(config, rentalId).then(response=> {
+                        myRentalsByUser();
+                    }).catch(error=> {
+                        console.log(error);
+                    })
+                },
+            ]
+        );
     }
 
     const logOut = () => {
@@ -155,6 +189,14 @@ export function RentalProvider({children}: Props) {
             lastName: '',
             name: ''
         });
+    }
+
+    const searchByWord = (word: string) => {
+        motorcycle.searchByMotorcycleName(config, word).then(response=> {
+            setMotorcycles(response.data);
+        }).catch(error=> {
+            console.log(error);
+        })
     }
 
     const filtersMotorcycles = (motorcycles: Motorcycle[]) => {
@@ -189,7 +231,9 @@ export function RentalProvider({children}: Props) {
             myRentals,
             myRentalsByUser,
             addRental,
-            logOut
+            cancelMyRental,
+            logOut,
+            searchByWord
         }}>
             {children}
         </RentalContext.Provider>

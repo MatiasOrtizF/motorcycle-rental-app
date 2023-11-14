@@ -39,3 +39,8 @@ export interface RentalData {
         id: number
     }
 }
+
+export interface Features {
+    title: string,
+    value: number
+}
