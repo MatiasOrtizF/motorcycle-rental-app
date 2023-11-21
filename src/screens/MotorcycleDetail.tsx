@@ -7,12 +7,13 @@ import styles from '../styles/Styles';
 import { Calendar } from 'react-native-calendars';
 import { useRental } from '../hooks/rentalContext';
 import { Features } from '../types';
+import { rental } from '../service/RentalService';
 
 type motorcycleDetailProps = NativeStackScreenProps<RootStackParamList, 'MotorcycleDetail'>;
 
 export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     const {motorcycleName, image, id, price, rating, length ,torque, weight, fuel, gps} = route.params || {};
-    const {saveMotorcycle, addRental} = useRental();
+    const {saveMotorcycle, addRental, motorcycleSaved, motorcycleSave} = useRental();
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const starArray = Array.from({ length: rating }, (_, index) => index);
@@ -27,6 +28,10 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
         {title: 'Weight', value: weight},
         {title: 'Fuel', value: fuel},
     ]
+
+    useEffect(()=> {
+        motorcycleSaved(id);
+    }, [])
 
     useEffect(()=> {
         setDayRental('');
@@ -56,7 +61,7 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
                 <View style={{flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 15, width: "100%"}}>
                     <Text style={{width: "90%", fontSize: 20, fontWeight: "700"}}>{motorcycleName}</Text>
                     <TouchableOpacity onPress={()=> saveMotorcycle(id)} style={{width: "10%", alignSelf: "center"}}>
-                        <Image style={{width: 25, height: 25, alignSelf: "flex-end"}} source={require('../../assets/icons/save-icon.png')} />
+                        <Image style={{width: 25, height: 25, alignSelf: "flex-end"}} source={motorcycleSave ? require ('../../assets/icons/saved-icon.png') : require ('../../assets/icons/save-icon.png')} />
                     </TouchableOpacity>
                 </View>
                 <ImageBackground style={{width: "100%", height: 250}} source={{uri: image}}/>

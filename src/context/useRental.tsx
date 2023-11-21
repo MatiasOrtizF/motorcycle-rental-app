@@ -28,6 +28,8 @@ export const RentalContext = createContext({
     setUserData: (value: UserData)=> {},
     myRentals: [] as MyRentals[],
     myRentalsByUser: ()=> {},
+    motorcycleSaved: (value: number)=> {},
+    motorcycleSave: false,
     addRental: (renalData: RentalData)=> {},
     cancelMyRental: (rentalId: number)=> {},
     logOut: ()=> {},
@@ -55,6 +57,7 @@ export function RentalProvider({children}: Props) {
         lastName: '',
         name: ''
     });
+    const [motorcycleSave, setMotorcycleSave] = useState<boolean>(false);
     const [myRentals, setMyRentals] = useState<Array<MyRentals>>([]);
 
     // const [rentalData, setRentalData] = useState<RentalData>({
@@ -124,6 +127,20 @@ export function RentalProvider({children}: Props) {
             else {
                 console.error("Error", error);
             }
+        })
+    }
+
+    
+    const motorcycleSaved = (motorcycleId: number) => {
+        save.motorcycleSaved(config, motorcycleId).then(response=> {
+            setMotorcycleSave(response.data);
+            console.log(response.data)
+        }).catch(error=> {
+            if(error.response.status === 401) {
+                alert("Your session has expired. Please log in again.");
+                logOut();
+            }
+            console.log(error);
         })
     }
 
@@ -225,6 +242,8 @@ export function RentalProvider({children}: Props) {
             motorcyclesSave,
             saveMotorcycle,
             unsaveMotorcycle,
+            motorcycleSaved,
+            motorcycleSave,
             filteredMotorcycle,
             userData,
             setUserData,

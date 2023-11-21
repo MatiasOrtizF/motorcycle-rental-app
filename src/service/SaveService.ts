@@ -13,5 +13,8 @@ export const save = {
     },
     unsaveMotorcycle: function(config: AxiosRequestConfig, motorcycleId: number) {
         return instance.delete(endpoint + "?motorcycleId=" + motorcycleId, config);
+    },
+    motorcycleSaved: function(config: AxiosRequestConfig, motorcylceId: number) {
+        return instance.get(endpoint + "/" + motorcylceId, config);
     }
 }
