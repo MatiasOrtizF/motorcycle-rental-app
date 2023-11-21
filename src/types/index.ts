@@ -44,3 +44,8 @@ export interface Features {
     title: string,
     value: number
 }
+
+export interface PaymentStatus {
+    title: string,
+    value: string | number
+}

@@ -10,31 +10,35 @@ import Header from '../components/Header';
 import {Motorcycle} from '../types/index';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Slider from '@react-native-community/slider';
+import Loading from '../components/Loading';
 
 export default function Home() {
-    const {getAllMotorcycles, filteredMotorcycle} = useRental();
+    const {getAllMotorcycles, filteredMotorcycle, loading} = useRental();
 
     useEffect(()=> {
         getAllMotorcycles();
     }, [])
 
     return(
-        <BottomSheetModalProvider>
-            <SafeAreaView>
-                <View style={{paddingHorizontal: 10}}>
-                    {/* fix marginTop */}
-                    <FlatList
-                        data={filteredMotorcycle}
-                        renderItem={( {item}: {item: Motorcycle})=> (
-                            <MotorcycleList {...item}/>
-                        )}
-                        ListHeaderComponent={Header}
-                        showsVerticalScrollIndicator={false}
-                        numColumns={2}
-                        keyExtractor={item=> item.id.toString()}
-                    />
-                </View>
-            </SafeAreaView>
-        </BottomSheetModalProvider>
+        loading ? 
+            <Loading/>
+        :
+            <BottomSheetModalProvider>
+                <SafeAreaView>
+                    <View style={{paddingHorizontal: 10}}>
+                        {/* fix marginTop */}
+                        <FlatList
+                            data={filteredMotorcycle}
+                            renderItem={( {item}: {item: Motorcycle})=> (
+                                <MotorcycleList {...item}/>
+                            )}
+                            ListHeaderComponent={Header}
+                            showsVerticalScrollIndicator={false}
+                            numColumns={2}
+                            keyExtractor={item=> item.id.toString()}
+                        />
+                    </View>
+                </SafeAreaView>
+            </BottomSheetModalProvider>
     )
 }

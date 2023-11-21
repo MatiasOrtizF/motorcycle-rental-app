@@ -10,6 +10,7 @@ import { Alert } from "react-native";
 import { useEvent } from "react-native-reanimated";
 
 export const RentalContext = createContext({
+    loading: true,
     motorcycles: [] as Motorcycle[],
     motorcyclesSave: [] as Motorcycle[],
     priceRange: 0,
@@ -41,6 +42,7 @@ interface Props {
 }
 
 export function RentalProvider({children}: Props) {
+    const [loading, setLoading] = useState<boolean>(true);
     const [motorcycles, setMotorcycles] = useState<Array<Motorcycle>>([]);
     const [priceRange, setPriceRange] = useState<number>(0);
     const [gpsSelected, setGpsSelected] = useState<string | boolean>('all');
@@ -70,8 +72,10 @@ export function RentalProvider({children}: Props) {
     // });
 
     const getAllMotorcycles = () => {
+        setLoading(true);
         motorcycle.getAll(config).then(response=> {
             setMotorcycles(response.data);
+            setLoading(false);
         }).catch(error=> {
             if(error.response.status === 401) {
                 alert("Your session has expired. Please log in again.");
@@ -132,9 +136,10 @@ export function RentalProvider({children}: Props) {
 
     
     const motorcycleSaved = (motorcycleId: number) => {
+        setLoading(true);
         save.motorcycleSaved(config, motorcycleId).then(response=> {
             setMotorcycleSave(response.data);
-            console.log(response.data)
+            setLoading(false);
         }).catch(error=> {
             if(error.response.status === 401) {
                 alert("Your session has expired. Please log in again.");
@@ -229,6 +234,7 @@ export function RentalProvider({children}: Props) {
 
     return(
         <RentalContext.Provider value={{
+            loading,
             motorcycles,
             priceRange,
             setPriceRange,
