@@ -1,3 +1,5 @@
+import exp from "constants"
+
 export interface Motorcycle {
     id: number
     image: string

@@ -11,6 +11,8 @@ import { useEvent } from "react-native-reanimated";
 
 export const RentalContext = createContext({
     loading: true,
+    darkMode: false,
+    setDarkmode: (value: boolean)=> {},
     motorcycles: [] as Motorcycle[],
     motorcyclesSave: [] as Motorcycle[],
     priceRange: 0,
@@ -33,6 +35,7 @@ export const RentalContext = createContext({
     motorcycleSave: false,
     addRental: (renalData: RentalData)=> {},
     cancelMyRental: (rentalId: number)=> {},
+    getAllRental: (motorcycleId: number)=> {},
     logOut: ()=> {},
     searchByWord: (value: string)=> {}
 });
@@ -43,6 +46,7 @@ interface Props {
 
 export function RentalProvider({children}: Props) {
     const [loading, setLoading] = useState<boolean>(true);
+    const [darkMode, setDarkmode] = useState<boolean>(true);
     const [motorcycles, setMotorcycles] = useState<Array<Motorcycle>>([]);
     const [priceRange, setPriceRange] = useState<number>(0);
     const [gpsSelected, setGpsSelected] = useState<string | boolean>('all');
@@ -182,7 +186,7 @@ export function RentalProvider({children}: Props) {
         }
     }
 
-    const cancelMyRental = (rentalId: number)=> {
+    const cancelMyRental = (rentalId: number) => {
         Alert.alert(
             'Confirm Rental Cancellation',
             'Are you sure you want to proceed with canceling the rental?',
@@ -197,6 +201,13 @@ export function RentalProvider({children}: Props) {
                 },
             ]
         );
+    }
+
+    const getAllRental = (motorcycleId: number) => {
+        rental.getAllRentalByMotorcycle(config, motorcycleId).then(()=> {
+        }).catch(error=> {
+            console.log(error);
+        })
     }
 
     const logOut = () => {
@@ -235,6 +246,8 @@ export function RentalProvider({children}: Props) {
     return(
         <RentalContext.Provider value={{
             loading,
+            darkMode,
+            setDarkmode,
             motorcycles,
             priceRange,
             setPriceRange,
@@ -257,6 +270,7 @@ export function RentalProvider({children}: Props) {
             myRentalsByUser,
             addRental,
             cancelMyRental,
+            getAllRental,
             logOut,
             searchByWord
         }}>

@@ -3,7 +3,7 @@ import {Motorcycle} from "./index";
 export type RootStackParamList = {
     TabNavigation: undefined;
     MotorcycleDetail: Motorcycle; 
-    MyMotorcycles: undefined;
+    Configuration: undefined;
     MyRentals: undefined;
     CalendarView: undefined;
 };

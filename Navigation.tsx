@@ -14,7 +14,7 @@ import Profile from "./src/screens/Profile";
 import Save from "./src/screens/Save";
 import MyRentals from "./src/screens/MyRentals";
 import MotorcycleDetail from "./src/screens/MotorcycleDetail";
-import MyMotorcycles from "./src/screens/MyMotorcycles";
+import Configuration from "./src/screens/Configuration";
 import CalendarView from "./src/screens/CalenderView";
 
 const Tab = createBottomTabNavigator();
@@ -84,7 +84,7 @@ export default function Navigation() {
             <Stack.Navigator>
                 <Stack.Screen name="TabNavigation" component={TabNavigation} options={{headerShown: false}}/>
                 <Stack.Screen name="MotorcycleDetail" component={MotorcycleDetail} options={{headerTitle: 'Motorcycle Details'}}/>
-                <Stack.Screen name="MyMotorcycles" component={MyMotorcycles}/>
+                <Stack.Screen name="Configuration" component={Configuration}/>
                 <Stack.Screen name="MyRentals" component={MyRentals}/>
             </Stack.Navigator>
         </NavigationContainer>

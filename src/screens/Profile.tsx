@@ -7,6 +7,7 @@ import { RootStackParamList } from "../types/RootStackParamList";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import styles from "../styles/Styles";
 import { useRental } from "../hooks/rentalContext";
+import { title } from "process";
 
 export default function Profile({navigation}: any) {
     const {userData, logOut} = useRental();
@@ -25,9 +26,9 @@ export default function Profile({navigation}: any) {
                     </View>
                 </View>
                 <View>
-                    <TouchableOpacity onPress={()=> navigation.navigate("MyMotorcycles")} style={{flexDirection: 'row', width: "100%", backgroundColor: "white", padding: 15, borderRadius: 50, marginVertical: 8}}>
-                        <Image style={{width: 20, height: 20}} source={require('../../assets/icons/my-motorcycles-icon.png')}/>
-                        <Text style={{marginLeft: 5}}>My Motorcycles</Text>
+                    <TouchableOpacity onPress={()=> navigation.navigate("Configuration")} style={{flexDirection: 'row', width: "100%", backgroundColor: "white", padding: 15, borderRadius: 50, marginVertical: 8}}>
+                        <Image style={{width: 20, height: 20}} source={require('../../assets/icons/configuration-icon.png')}/>
+                        <Text style={{marginLeft: 5}}>Configuration</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=> navigation.navigate("MyRentals")} style={{flexDirection: 'row', width: "100%", backgroundColor: "white", padding: 15, borderRadius: 50, marginVertical: 8}}>
                         <Image style={{width: 20, height: 20}} source={require('../../assets/icons/my-rentals-icon.png')}/>

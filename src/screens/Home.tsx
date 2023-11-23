@@ -13,7 +13,7 @@ import Slider from '@react-native-community/slider';
 import Loading from '../components/Loading';
 
 export default function Home() {
-    const {getAllMotorcycles, filteredMotorcycle, loading} = useRental();
+    const {darkMode, getAllMotorcycles, filteredMotorcycle, loading} = useRental();
 
     useEffect(()=> {
         getAllMotorcycles();
@@ -24,7 +24,7 @@ export default function Home() {
             <Loading/>
         :
             <BottomSheetModalProvider>
-                <SafeAreaView>
+                <SafeAreaView style={{backgroundColor: darkMode ? myColors.bgDark : myColors.bgLigth}}>
                     <View style={{paddingHorizontal: 10}}>
                         {/* fix marginTop */}
                         <FlatList

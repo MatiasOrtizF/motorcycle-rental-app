@@ -4,9 +4,10 @@ import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import Modal from './Modal';
 import { useRental } from '../hooks/rentalContext';
+import { myColors } from '../styles/Colors';
 
 export default function Header() {
-    const {userData, searchByWord} = useRental();
+    const {darkMode, userData, searchByWord} = useRental();
 
     const [word, setWord] = useState<string>('');
 
@@ -23,12 +24,12 @@ export default function Header() {
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                     <Image style={{width: 45, height: 45, borderRadius: 50, marginRight: 7}} source={{uri: `https://i.pravatar.cc/150?u=${userData.name + userData.lastName}`}}/>
                     <View>
-                        <Text>Welcome 👋</Text>
-                        <Text style={{fontWeight: "600", fontSize: 16}}>{userData.name + " " + userData.lastName}</Text>
+                        <Text style={{color: darkMode ? myColors.light: myColors.dark}}>Welcome 👋</Text>
+                        <Text style={{fontWeight: "600", fontSize: 16, color: darkMode ? myColors.light: myColors.dark}}>{userData.name + " " + userData.lastName}</Text>
                     </View>
                 </View>
                 <TouchableWithoutFeedback onPress={handlePresentModal}>
-                    <Image style={{width: 45, height: 45}} source={require('../../assets/icons/filter-icon.png')} />
+                    <Image style={{width: 45, height: 45, backgroundColor: darkMode ? "white" : null, borderRadius: darkMode ? 50 : null}} source={darkMode ? require(`../../assets/icons/filter-dark-icon.png`) :  require(`../../assets/icons/filter-icon.png`)} />
                 </TouchableWithoutFeedback>
             </View>
             <View>

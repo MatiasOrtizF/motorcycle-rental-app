@@ -10,5 +10,8 @@ export const rental = {
     },
     deleteRental: function(config: AxiosRequestConfig, rentalId: number) {
         return instance.delete(endpoint + "/" + rentalId, config);
+    },
+    getAllRentalByMotorcycle: function(config: AxiosRequestConfig, motorcycleId: number) {
+        return instance.get(endpoint + "/" + motorcycleId, config);
     }
 }

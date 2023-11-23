@@ -14,7 +14,7 @@ type motorcycleDetailProps = NativeStackScreenProps<RootStackParamList, 'Motorcy
 
 export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     const {motorcycleName, image, id, price, rating, length ,torque, weight, fuel, gps} = route.params || {};
-    const {saveMotorcycle, addRental, motorcycleSaved, motorcycleSave, loading} = useRental();
+    const {darkMode, saveMotorcycle, addRental, motorcycleSaved, motorcycleSave, loading, getAllRental} = useRental();
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const starArray = Array.from({ length: rating }, (_, index) => index);
@@ -38,6 +38,7 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
 
     useEffect(()=> {
         motorcycleSaved(id);
+        getAllRental(id);
     }, [])
 
     useEffect(()=> {
@@ -57,9 +58,9 @@ export default function MotorcycleDetail({route}: motorcycleDetailProps) {
     
             const miliSecondsPerDay:number = 24 * 60 * 60 * 1000; // milisegundos en un dia
     
-            let days:number = Math.round((end - start) / miliSecondsPerDay)
+            let days:number = (Math.round((end - start) / miliSecondsPerDay))+1
     
-            setTotalPrice(price*days);
+            setTotalPrice(price*(days));
         }
     }
     return(
